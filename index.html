@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>বিভাজ্যতার নিয়ম 1-10</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="test-container">
+    <div class="header">
+      <div class="section-title">বিভাজ্যতার নিয়ম 1-10</div>
+      <div class="timer">সময়: <span id="time">00:00</span></div>
+    </div>
+
+    <div class="question-area">
+      <div class="question-number">প্রশ্ন ১</div>
+      <div class="question-text">প্রশ্ন লোড হচ্ছে...</div>
+      <img id="question-image" src="" alt="প্রশ্নের ছবি" class="question-image" />
+
+    </div>
+
+    <div class="options-area"></div>
+
+    <div class="navigation-area">
+      <button class="next-button">Next</button>
+      <button class="prev-button" disabled>Previous</button>
+      <button class="clear-response-button">Clear Response</button>
+      <button class="mark-for-review-button">Mark for Review</button>
+      <button class="submit-button">Submit</button>
+    </div>
+
+    <div class="review-area">
+      <h3>প্রশ্ন পর্যালোচনা</h3>
+      <div class="question-grid"></div>
+    </div>
+
+    <div class="result-area" style="display: none;">
+      <h2>Result</h2>
+      <div class="score">Score: <span id="score">0</span></div>
+      <div class="correct-answers">Correct Answer: <span id="correct-count">0</span></div>
+      <div class="wrong-answers">Wrong Answer: <span id="wrong-count">0</span></div>
+      <div class="unattempted-questions">Unattempted: <span id="unattempted-count">0</span></div>
+
+      <div class="filter-buttons">
+        <button id="show-all" class="filter-button active">সমস্ত প্রশ্ন দেখান</button>
+        <button id="show-correct" class="filter-button">সঠিক প্রশ্ন দেখান</button>
+        <button id="show-wrong" class="filter-button">ভুল প্রশ্ন দেখান</button>
+        <button id="show-unattempted" class="filter-button">উত্তর না দেওয়া প্রশ্ন দেখান</button>
+      </div>
+
+      <div id="review-questions" class="review-questions-container"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
