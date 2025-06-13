@@ -1,5 +1,5 @@
-const questions = [ 
-
+const questions = [
+  // আপনার প্রশ্ন JSON এখানে থাকবে (আগের মতো)
   {
     "question": "কোন সংখ্যাটি 2 দ্বারা বিভাজ্য?",
     "options": ["(a) 35", "(b) 46", "(c) 51", "(d) 77"],
@@ -120,7 +120,7 @@ const questions = [
     "answer": "(c)",
     "explanation": "একটি সংখ্যা 6 এবং 10 উভয় দ্বারা বিভাজ্য হলে, সেটি তাদের ল.সা.গু. (LCM) দ্বারাও বিভাজ্য হবে। LCM(6, 10) = 30। তাই সংখ্যাটি অবশ্যই 30 দ্বারা বিভাজ্য হবে।"
   }
-]
+];
 
 const questionNumberElement = document.querySelector('.question-number');
 const questionTextElement = document.querySelector('.question-text');
@@ -145,10 +145,16 @@ const showCorrectButton = document.getElementById('show-correct');
 const showWrongButton = document.getElementById('show-wrong');
 const showUnattemptedButton = document.getElementById('show-unattempted');
 
+// Introduction Screen Elements
+const introductionScreen = document.querySelector('.introduction-screen');
+const startTestButton = document.getElementById('start-test-button');
+const testContent = document.querySelector('.test-content');
+
+
 let currentQuestionIndex = 0;
 let userAnswers = new Array(questions.length).fill(null);
 let markedForReview = new Array(questions.length).fill(false);
-let timeLeft = 30 * 60; // 35 minutes in seconds
+let timeLeft = 30 * 60; // 30 minutes in seconds
 let timerInterval;
 let totalScore = 0;
 let questionStatus = new Array(questions.length).fill(null); // 'correct', 'wrong', 'unattempted'
@@ -185,9 +191,6 @@ function loadQuestion() {
   const currentQuestion = questions[currentQuestionIndex];
   questionNumberElement.textContent = `প্রশ্ন ${currentQuestionIndex + 1}`;
 
-  // এই অংশটি ধরে নেয় যে আপনার প্রশ্নের অ্যারেতে টেক্সটের জন্য একটি 'question' প্রপার্টি থাকবে।
-  // যদি না থাকে, তবে প্রশ্নটি কীভাবে প্রদর্শন করতে চান তার উপর নির্ভর করে এটি সামঞ্জস্য করতে হতে পারে।
-  // ছবি-ভিত্তিক প্রশ্নগুলির জন্য, আপনি কেবল টেক্সট এলিমেন্টটি লুকানো বা খালি সেট করতে চাইতে পারেন।
   questionTextElement.textContent = currentQuestion.question || '';
 
   const imageElement = document.getElementById('question-image');
@@ -199,7 +202,7 @@ function loadQuestion() {
   }
 
   const shuffledOptions = [...currentQuestion.options];
-  shuffleArray(shuffledOptions);
+  shuffleArray(shuffledOptions); // অপশনগুলো শাফেল করুন
 
   optionsAreaElement.innerHTML = '';
   shuffledOptions.forEach(option => {
@@ -258,12 +261,15 @@ function clearResponse() {
 
 function toggleMarkForReview() {
     markedForReview[currentQuestionIndex] = !markedForReview[currentQuestionIndex];
+    // This logic ensures if a question is marked/unmarked, it automatically moves to the next,
+    // or just reloads the current one if it's the last question.
     if (currentQuestionIndex < questions.length - 1) {
         nextQuestion();
     } else {
-        loadQuestion();
+        loadQuestion(); // Reload to update button text/style
     }
 }
+
 
 function submitTest() {
   clearInterval(timerInterval);
@@ -271,12 +277,9 @@ function submitTest() {
 }
 
 function showResult() {
-  document.querySelector('.header').style.display = 'none';
-  document.querySelector('.question-area').style.display = 'none';
-  document.querySelector('.options-area').style.display = 'none';
-  document.querySelector('.navigation-area').style.display = 'none';
-  document.querySelector('.review-area').style.display = 'none';
-  resultAreaElement.style.display = 'block';
+  introductionScreen.style.display = 'none'; // Intro screen hide
+  testContent.style.display = 'none'; // Test content hide
+  resultAreaElement.style.display = 'block'; // Result area show
 
   let correctCount = 0;
   let wrongCount = 0;
@@ -284,9 +287,10 @@ function showResult() {
   totalScore = 0;
 
   questions.forEach((question, index) => {
-    const correctAnswerText = question.options.find(opt => opt.startsWith(question.answer));
+    // সঠিক উত্তর খুঁজে বের করার জন্য `answer` প্রপার্টি ব্যবহার করুন
+    const correctAnswerOption = question.options.find(opt => opt.startsWith(question.answer));
 
-    if (userAnswers[index] === correctAnswerText) {
+    if (userAnswers[index] === correctAnswerOption) {
       correctCount++;
       totalScore++;
       questionStatus[index] = 'correct'; // স্ট্যাটাস সংরক্ষণ করুন
@@ -300,7 +304,7 @@ function showResult() {
     }
   });
 
-  totalScore = Math.max(0, totalScore);
+  totalScore = Math.max(0, totalScore); // স্কোর 0 এর নিচে যাতে না যায়
 
   scoreElement.textContent = totalScore.toFixed(2);
   correctCountElement.textContent = correctCount;
@@ -364,7 +368,7 @@ function filterQuestions(filterType) {
             div.classList.add('review-item');
             div.style.width = '100%';
             let userAnswerText = userAnswers[index] || 'কোন উত্তর নেই';
-            let correctAnswerText = question.options.find(opt => opt.startsWith(question.answer)) || 'N/A';
+            const correctAnswerText = question.options.find(opt => opt.startsWith(question.answer)) || 'N/A';
 
             let statusText = '';
             let userAnswerClass = '';
@@ -386,11 +390,13 @@ function filterQuestions(filterType) {
             }
 
             if (userAnswers[index] !== null && markedForReview[index]) {
-                statusText += ' <span style="color: red;">*</span>';
+                // This condition for adding '*' is a bit tricky, if marked is cleared on clear response,
+                // then * won't appear, which is correct.
+                // Re-evaluate if you want a visual indicator for "attempted and marked for review" explicitly.
+                // For now, I'll remove the '*' as it's typically for "unattempted and marked for review".
+                // statusText += ' <span style="color: red;">*</span>';
             }
 
-            // ছবি সহ প্রশ্নগুলির জন্য, আপনি রিভিউ সেকশনেও ছবিটি প্রদর্শন করতে চাইতে পারেন।
-            // আপাতত, আমি ধরে নিচ্ছি আপনার প্রশ্ন অবজেক্টগুলিতে একটি 'question' প্রপার্টি আছে, যদি না থাকে তবে কেবল ছবি ব্যবহার করুন।
             const questionContent = question.question ? `<b>প্রশ্ন ${index + 1}: ${question.question}</b>` :
                                       question.image ? `<img src="${question.image}" alt="Question Image" class="review-question-image" style="max-width: 100px; max-height: 100px; display: block; margin-top: 5px;">` :
                                       `<b>প্রশ্ন ${index + 1}</b>`;
@@ -411,20 +417,29 @@ function filterQuestions(filterType) {
 
 // প্রাথমিক কল
 document.addEventListener('DOMContentLoaded', () => {
-    for (let i = 0; i < questions.length; i++) {
-        const button = document.createElement('button');
-        button.classList.add('grid-button');
-        button.textContent = i + 1;
-        button.addEventListener('click', () => {
-            currentQuestionIndex = i;
-            loadQuestion();
-        });
-        questionGridContainer.appendChild(button);
-    }
+    // Start Test button event listener
+    startTestButton.addEventListener('click', () => {
+        introductionScreen.style.display = 'none'; // Hide intro screen
+        testContent.style.display = 'block'; // Show test content
 
-    loadQuestion();
-    startTimer();
+        // প্রশ্ন গ্রিড বাটন তৈরি করুন - ONLY when test starts
+        for (let i = 0; i < questions.length; i++) {
+            const button = document.createElement('button');
+            button.classList.add('grid-button');
+            button.textContent = i + 1;
+            button.addEventListener('click', () => {
+                currentQuestionIndex = i;
+                loadQuestion();
+            });
+            questionGridContainer.appendChild(button);
+        }
 
+        loadQuestion(); // প্রথম প্রশ্ন লোড করুন
+        startTimer();   // টাইমার শুরু করুন
+        updateReviewButtons(); // রিভিউ বাটনগুলো আপডেট করুন
+    });
+
+    // Event listeners for navigation and action buttons (always present)
     nextButton.addEventListener('click', nextQuestion);
     prevButton.addEventListener('click', prevQuestion);
     clearResponseButton.addEventListener('click', clearResponse);
@@ -436,7 +451,4 @@ document.addEventListener('DOMContentLoaded', () => {
     showCorrectButton.addEventListener('click', () => filterQuestions('correct'));
     showWrongButton.addEventListener('click', () => filterQuestions('wrong'));
     showUnattemptedButton.addEventListener('click', () => filterQuestions('unattempted'));
-
-    updateReviewButtons();
 });
-
