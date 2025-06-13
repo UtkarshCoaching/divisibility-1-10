@@ -14,6 +14,86 @@ body {
     padding: 20px;
 }
 
+/* Introduction Screen Specific Styles */
+.introduction-screen {
+    text-align: center;
+    padding: 20px; /* Padding inside the intro screen */
+    background-color: #f8f9fa;
+    border-radius: 8px; /* Match test-container or slightly more rounded */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Separate shadow for the intro screen */
+    margin-bottom: 20px; /* Space below intro screen */
+    border: 1px solid #ddd; /* Light border for intro screen */
+}
+
+.introduction-screen h2 {
+    color: #007bff; /* Primary blue for heading */
+    margin-bottom: 20px;
+    font-size: 1.8em; /* Standard heading size */
+    text-shadow: none; /* Remove text shadow for cleaner look */
+}
+
+.introduction-screen p {
+    font-size: 1em; /* Standard text size */
+    margin-bottom: 8px;
+    color: #333; /* Darker grey for body text */
+    line-height: 1.5;
+}
+
+/* Specific coloring for information points */
+.introduction-screen p strong {
+    font-weight: 700; /* Bolder strong text for all info points */
+}
+
+.introduction-screen p:nth-of-type(1) strong { /* পরীক্ষার বিষয় */
+    color: #28a745; /* Green */
+}
+
+.introduction-screen p:nth-of-type(2) strong { /* মোট প্রশ্ন */
+    color: #ffc107; /* Orange/Amber */
+}
+
+.introduction-screen p:nth-of-type(3) strong { /* মোট নম্বর */
+    color: #17a2b8; /* Cyan/Teal */
+}
+
+.introduction-screen p:nth-of-type(4) strong { /* সময়কাল */
+    color: #6f42c1; /* Purple */
+}
+
+.introduction-screen p:nth-of-type(5) strong { /* নেগেটিভ মার্কিং */
+    color: #dc3545; /* Red */
+}
+
+.start-test-button {
+    background-color: #28a745; /* Vibrant Green */
+    color: white;
+    padding: 12px 25px; /* Standard padding */
+    border: none;
+    border-radius: 5px; /* Standard rounded corners */
+    font-size: 1.2em; /* Standard font size */
+    cursor: pointer;
+    margin-top: 30px; /* Space above the button */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    font-weight: bold;
+    letter-spacing: normal; /* Remove letter-spacing */
+    box-shadow: 0 2px 4px rgba(40, 167, 69, 0.2); /* Standard green shadow */
+    animation: none; /* Remove pulse animation to simplify */
+}
+
+.start-test-button:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: none; /* Remove lift effect */
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3); /* Enhanced shadow on hover */
+}
+
+.start-test-button:active {
+    background-color: #1e7e34; /* Even darker green on click */
+    transform: none; /* Return to original position */
+    box-shadow: 0 1px 2px rgba(40, 167, 69, 0.1); /* Reduced shadow on click */
+}
+
+
+/* Test Content Styles (Applied when test-content is visible) */
 .header {
     display: flex;
     justify-content: space-between;
@@ -44,6 +124,17 @@ body {
 .question-text {
     font-size: 1.1em;
     margin-top: 10px;
+}
+
+.question-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-top: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    object-fit: contain;
 }
 
 .options-area {
@@ -211,6 +302,7 @@ body {
     content: none;
 }
 
+/* Result Area Styles */
 .result-area {
     margin-top: 30px;
     padding-top: 20px;
@@ -322,7 +414,7 @@ body {
     color: #555;
 }
 
-/* নতুন ফিল্টার বাটনগুলির জন্য স্টাইল */
+/* Filter Buttons */
 .filter-buttons {
     display: flex;
     justify-content: center;
@@ -366,7 +458,7 @@ body {
     border-color: #888;
 }
 
-/* মোবাইল বাটনগুলির জন্য রেসপনসিভ */
+/* Responsive Styles */
 @media (max-width: 600px) {
   .navigation-area {
     flex-direction: column;
@@ -375,17 +467,6 @@ body {
   .navigation-area button {
     width: 100%;
     margin-bottom: 10px;
-  }
-
-  .question-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin-top: 15px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    object-fit: contain;
   }
 
   .filter-buttons {
