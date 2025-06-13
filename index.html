@@ -8,34 +8,43 @@
 </head>
 <body>
   <div class="test-container">
-    <div class="header">
-      <div class="section-title">বিভাজ্যতার নিয়ম 1-10</div>
-      <div class="timer">সময়: <span id="time">00:00</span></div>
+    <div class="introduction-screen">
+      <h2>পরীক্ষার তথ্য</h2>
+      <p><strong>পরীক্ষার বিষয়:</strong> বিভাজ্যতার নিয়ম (২ থেকে ১০)</p>
+      <p><strong>মোট প্রশ্ন:</strong> 20টি</p>
+      <p><strong>মোট নম্বর:</strong> 20</p>
+      <p><strong>সময়কাল:</strong> 30 মিনিট</p>
+      <p><strong>নেগেটিভ মার্কিং:</strong> প্রতিটি ভুল উত্তরের জন্য 0.33 নম্বর কাটা হবে।</p>
+      <button id="start-test-button" class="start-test-button">পরীক্ষা শুরু করুন</button>
     </div>
 
-    <div class="question-area">
-      <div class="question-number">প্রশ্ন ১</div>
-      <div class="question-text">প্রশ্ন লোড হচ্ছে...</div>
-      <img id="question-image" src="" alt="প্রশ্নের ছবি" class="question-image" />
+    <div class="test-content" style="display: none;">
+        <div class="header">
+          <div class="section-title">বিভাজ্যতার নিয়ম 1-10</div>
+          <div class="timer">সময়: <span id="time">00:00</span></div>
+        </div>
 
-    </div>
+        <div class="question-area">
+          <div class="question-number">প্রশ্ন ১</div>
+          <div class="question-text">প্রশ্ন লোড হচ্ছে...</div>
+          <img id="question-image" src="" alt="প্রশ্নের ছবি" class="question-image" />
+        </div>
 
-    <div class="options-area"></div>
+        <div class="options-area"></div>
 
-    <div class="navigation-area">
-      <button class="next-button">Next</button>
-      <button class="prev-button" disabled>Previous</button>
-      <button class="clear-response-button">Clear Response</button>
-      <button class="mark-for-review-button">Mark for Review</button>
-      <button class="submit-button">Submit</button>
-    </div>
+        <div class="navigation-area">
+          <button class="next-button">Next</button>
+          <button class="prev-button" disabled>Previous</button>
+          <button class="clear-response-button">Clear Response</button>
+          <button class="mark-for-review-button">Mark for Review</button>
+          <button class="submit-button">Submit</button>
+        </div>
 
-    <div class="review-area">
-      <h3>প্রশ্ন পর্যালোচনা</h3>
-      <div class="question-grid"></div>
-    </div>
-
-    <div class="result-area" style="display: none;">
+        <div class="review-area">
+          <h3>প্রশ্ন পর্যালোচনা</h3>
+          <div class="question-grid"></div>
+        </div>
+    </div> <div class="result-area" style="display: none;">
       <h2>Result</h2>
       <div class="score">Score: <span id="score">0</span></div>
       <div class="correct-answers">Correct Answer: <span id="correct-count">0</span></div>
